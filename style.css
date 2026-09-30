@@ -1,0 +1,361 @@
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Fredoka', 'Nunito', sans-serif;
+    user-select: none;
+}
+
+/* Paleta Harmônica Rosa e Amarela */
+:root {
+    --bg-gradient: linear-gradient(135deg, #fff3b0 0%, #ffccd5 50%, #f8bbd0 100%);
+    --card-bg: #fffdfa;
+    --pink-primary: #ff527b;
+    --pink-dark: #c2185b;
+    --pink-light: #ffb3c1;
+    --yellow-primary: #ffca28;
+    --yellow-dark: #f57f17;
+    --yellow-light: #ffecb3;
+    --text-color: #5d4037;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-gradient);
+    overflow-x: hidden;
+    position: relative;
+    padding: 20px;
+}
+
+/* Elementos Flutuantes (Flores e Estrelas) */
+.decorations {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.decor {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: float 4s ease-in-out infinite alternate;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+.decor-1 { top: 8%; left: 10%; animation-delay: 0s; }
+.decor-2 { top: 15%; right: 12%; animation-delay: 0.5s; font-size: 2.2rem; }
+.decor-3 { bottom: 12%; left: 8%; animation-delay: 1s; }
+.decor-4 { bottom: 18%; right: 10%; animation-delay: 1.5s; font-size: 2.5rem; }
+.decor-5 { top: 45%; left: 4%; animation-delay: 0.8s; }
+.decor-6 { top: 50%; right: 5%; animation-delay: 1.2s; }
+.decor-7 { top: 80%; left: 20%; animation-delay: 0.3s; }
+.decor-8 { top: 5%; left: 45%; animation-delay: 1.7s; }
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-18px) rotate(12deg); }
+}
+
+/* Card Principal em 3D */
+.card-3d {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 460px;
+    background: var(--card-bg);
+    border-radius: 28px;
+    padding: 32px 28px;
+    border: 4px solid #fff;
+    /* Efeito de Profundidade 3D em tom Amarelo/Dourado */
+    box-shadow: 
+        0 12px 0 0 var(--yellow-primary),
+        0 20px 25px rgba(93, 64, 55, 0.15);
+    transform: translateY(-4px);
+    transition: transform 0.2s ease;
+}
+
+/* Cabeçalho */
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.title {
+    color: var(--pink-dark);
+    font-size: 2.1rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 0px #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.heart-badge {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.subtitle {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin-top: 4px;
+}
+
+/* Visor de Senha 3D */
+.password-box-3d {
+    background: #ffffff;
+    border: 3px solid var(--yellow-light);
+    border-radius: 18px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 
+        inset 0 4px 6px rgba(0,0,0,0.05),
+        0 6px 0 0 var(--pink-light);
+    margin-bottom: 20px;
+}
+
+.password-text {
+    font-family: monospace, monospace;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--pink-dark);
+    word-break: break-all;
+    letter-spacing: 1px;
+}
+
+/* Botão de Copiar 3D */
+.btn-copy-3d {
+    background: var(--yellow-primary);
+    border: 2px solid #fff;
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 0 0 var(--yellow-dark);
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.95rem;
+}
+
+.btn-copy-3d:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 0 var(--yellow-dark);
+}
+
+.btn-copy-3d.copied {
+    background: var(--pink-primary);
+    color: white;
+    box-shadow: 0 4px 0 0 var(--pink-dark);
+}
+
+/* Indicador de Força */
+.strength-container {
+    margin-bottom: 22px;
+}
+
+.strength-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.strength-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: var(--yellow-light);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #fff;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.strength-bar-fill {
+    height: 100%;
+    width: 50%;
+    background: var(--pink-primary);
+    border-radius: 10px;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Seção de Controles */
+.options-group {
+    background: rgba(255, 248, 225, 0.7);
+    border-radius: 18px;
+    padding: 16px;
+    border: 2px dashed var(--pink-light);
+    margin-bottom: 24px;
+}
+
+/* Slider Customizado */
+.slider-box {
+    margin-bottom: 16px;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color);
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.badge-length {
+    background: var(--pink-primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 0 0 var(--pink-dark);
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+    background: var(--yellow-light);
+    border-radius: 5px;
+    border: 1px solid #fff;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background: var(--pink-primary);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px;
+    box-shadow: 0 3px 0 0 var(--pink-dark);
+    border: 2px solid #fff;
+}
+
+/* Checkboxes Estilizadas em 3D */
+.checkbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.custom-checkbox-3d {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 36px;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.custom-checkbox-3d input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    background-color: #fff;
+    border: 2px solid var(--yellow-primary);
+    border-radius: 8px;
+    box-shadow: 0 3px 0 0 var(--yellow-dark);
+    transition: all 0.1s ease;
+}
+
+.custom-checkbox-3d:hover input ~ .checkmark {
+    background-color: #fffde7;
+}
+
+.custom-checkbox-3d input:checked ~ .checkmark {
+    background-color: var(--pink-primary);
+    border-color: var(--pink-dark);
+    box-shadow: 0 3px 0 0 var(--pink-dark);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox-3d input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.custom-checkbox-3d .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Botão Principal Gerar 3D */
+.btn-generate-3d {
+    width: 100%;
+    background: linear-gradient(180deg, #ffca28 0%, #f57f17 100%);
+    color: #fff;
+    border: 3px solid #fff;
+    padding: 14px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 18px;
+    cursor: pointer;
+    box-shadow: 
+        0 6px 0 0 #e65100,
+        0 10px 15px rgba(245, 127, 23, 0.3);
+    transition: all 0.1s ease;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.btn-generate-3d:hover {
+    filter: brightness(1.05);
+}
+
+.btn-generate-3d:active {
+    transform: translateY(6px);
+    box-shadow: 
+        0 0 0 0 #e65100,
+        0 4px 8px rgba(245, 127, 23, 0.3);
+}

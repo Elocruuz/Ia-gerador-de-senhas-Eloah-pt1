@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senhas da Eloah Cruz</title>
+    <!-- Fonte Nunito / Fredoka do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Elementos Decorativos Flutuantes -->
+    <div class="decorations">
+        <span class="decor decor-1">🌸</span>
+        <span class="decor decor-2">⭐</span>
+        <span class="decor decor-3">✨</span>
+        <span class="decor decor-4">🌟</span>
+        <span class="decor decor-5">🌺</span>
+        <span class="decor decor-6">💫</span>
+        <span class="decor decor-7">🌸</span>
+        <span class="decor decor-8">⭐</span>
+    </div>
+
+    <main class="card-3d">
+        <!-- Cabeçalho -->
+        <header class="header">
+            <h1 class="title">Senhas da Eloah Cruz <span class="heart-badge">🌸</span></h1>
+            <p class="subtitle">Gere senhas super seguras para o seu dia a dia com estilo!</p>
+        </header>
+
+        <!-- Campo da Senha Gerada -->
+        <div class="password-box-3d">
+            <span id="passwordOutput" class="password-text">Clique em Gerar ✨</span>
+            <button id="copyBtn" class="btn-copy-3d" title="Copiar senha">
+                <span id="copyIcon">📋</span>
+            </button>
+        </div>
+
+        <!-- Indicador de Força da Senha -->
+        <div class="strength-container">
+            <div class="strength-label">
+                <span>Força da senha:</span>
+                <strong id="strengthText">Média</strong>
+            </div>
+            <div class="strength-bar-bg">
+                <div id="strengthBar" class="strength-bar-fill"></div>
+            </div>
+        </div>
+
+        <!-- Opções do Gerador -->
+        <div class="options-group">
+            
+            <!-- Tamanho da Senha -->
+            <div class="slider-box">
+                <div class="slider-header">
+                    <span>Tamanho da senha</span>
+                    <span id="lengthValue" class="badge-length">12</span>
+                </div>
+                <input type="range" id="lengthSlider" min="4" max="32" value="12">
+            </div>
+
+            <!-- Checkboxes de Caracteres -->
+            <div class="checkbox-grid">
+                <label class="custom-checkbox-3d">
+                    <input type="checkbox" id="includeUpper" checked>
+                    <span class="checkmark"></span>
+                    <span class="label-text">Letras maiúsculas (A-Z)</span>
+                </label>
+
+                <label class="custom-checkbox-3d">
+                    <input type="checkbox" id="includeLower" checked>
+                    <span class="checkmark"></span>
+                    <span class="label-text">Letras minúsculas (a-z)</span>
+                </label>
+
+                <label class="custom-checkbox-3d">
+                    <input type="checkbox" id="includeNumbers" checked>
+                    <span class="checkmark"></span>
+                    <span class="label-text">Números (0-9)</span>
+                </label>
+
+                <label class="custom-checkbox-3d">
+                    <input type="checkbox" id="includeSymbols" checked>
+                    <span class="checkmark"></span>
+                    <span class="label-text">Símbolos (!@#$%)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Botão Ação -->
+        <button id="generateBtn" class="btn-generate-3d">
+            GERAR NOVA SENHA ⭐
+        </button>
+    </main>
+
+    <!-- Script de Funcionalidade -->
+    <script>
+        const charSets = {
+            upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+            lower: 'abcdefghijklmnopqrstuvwxyz',
+            numbers: '0123456789',
+            symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+        };
+
+        const lengthSlider = document.getElementById('lengthSlider');
+        const lengthValue = document.getElementById('lengthValue');
+        const passwordOutput = document.getElementById('passwordOutput');
+        const generateBtn = document.getElementById('generateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const copyIcon = document.getElementById('copyIcon');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+
+        const checkboxes = {
+            upper: document.getElementById('includeUpper'),
+            lower: document.getElementById('includeLower'),
+            numbers: document.getElementById('includeNumbers'),
+            symbols: document.getElementById('includeSymbols')
+        };
+
+        // Atualizar contador do slider
+        lengthSlider.addEventListener('input', (e) => {
+            lengthValue.textContent = e.target.value;
+            generatePassword();
+        });
+
+        // Event listeners para opções
+        Object.values(checkboxes).forEach(cb => {
+            cb.addEventListener('change', generatePassword);
+        });
+
+        function generatePassword() {
+            const length = parseInt(lengthSlider.value);
+            let availableChars = '';
+            let mandatoryChars = [];
+
+            if (checkboxes.upper.checked) {
+                availableChars += charSets.upper;
+                mandatoryChars.push(getRandomChar(charSets.upper));
+            }
+            if (checkboxes.lower.checked) {
+                availableChars += charSets.lower;
+                mandatoryChars.push(getRandomChar(charSets.lower));
+            }
+            if (checkboxes.numbers.checked) {
+                availableChars += charSets.numbers;
+                mandatoryChars.push(getRandomChar(charSets.numbers));
+            }
+            if (checkboxes.symbols.checked) {
+                availableChars += charSets.symbols;
+                mandatoryChars.push(getRandomChar(charSets.symbols));
+            }
+
+            if (availableChars === '') {
+                passwordOutput.textContent = 'Selecione uma opção!';
+                passwordOutput.style.opacity = '0.6';
+                calculateStrength('', 0);
+                return;
+            }
+
+            passwordOutput.style.opacity = '1';
+            let passwordArray = [...mandatoryChars];
+
+            for (let i = passwordArray.length; i < length; i++) {
+                passwordArray.push(getRandomChar(availableChars));
+            }
+
+            // Embaralhar
+            passwordArray = passwordArray.sort(() => Math.random() - 0.5);
+            const finalPassword = passwordArray.join('');
+
+            passwordOutput.textContent = finalPassword;
+            calculateStrength(finalPassword, length);
+        }
+
+        function getRandomChar(str) {
+            return str[Math.floor(Math.random() * str.length)];
+        }
+
+        function calculateStrength(pwd, len) {
+            let score = 0;
+            if (len >= 8) score += 1;
+            if (len >= 12) score += 1;
+            if (/[A-Z]/.test(pwd)) score += 1;
+            if (/[a-z]/.test(pwd)) score += 1;
+            if (/[0-9]/.test(pwd)) score += 1;
+            if (/[^A-Za-z0-9]/.test(pwd)) score += 1;
+
+            if (score <= 2) {
+                strengthBar.style.width = '25%';
+                strengthBar.style.backgroundColor = '#ff6b81';
+                strengthText.textContent = 'Fraca 🌺';
+                strengthText.style.color = '#ff6b81';
+            } else if (score <= 4) {
+                strengthBar.style.width = '60%';
+                strengthBar.style.backgroundColor = '#fbc531';
+                strengthText.textContent = 'Média ⭐';
+                strengthText.style.color = '#e1b12c';
+            } else {
+                strengthBar.style.width = '100%';
+                strengthBar.style.backgroundColor = '#ff4081';
+                strengthText.textContent = 'Forte 🌸';
+                strengthText.style.color = '#c2185b';
+            }
+        }
+
+        // Copiar senha
+        copyBtn.addEventListener('click', () => {
+            const pwd = passwordOutput.textContent;
+            if (!pwd || pwd === 'Selecione uma opção!') return;
+
+            navigator.clipboard.writeText(pwd).then(() => {
+                copyIcon.textContent = '✨ Copiado!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyIcon.textContent = '📋';
+                    copyBtn.classList.remove('copied');
+                }, 1800);
+            });
+        });
+
+        generateBtn.addEventListener('click', generatePassword);
+
+        // Gerar ao carregar
+        generatePassword();
+    </script>
+</body>
+</html>
